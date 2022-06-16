@@ -1,9 +1,9 @@
-package Lesson3;
+package Lesson5;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -11,20 +11,32 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-public class EldoradoAutotestDeleteItem {
-    public static void main(String[] args) throws InterruptedException {
 
+public class EldoradoTest {
+    WebDriver webDriver;
+    ChromeOptions chromeOptions;
+    WebDriverWait webDriverWait;
 
-        ChromeOptions chromeOptions = new ChromeOptions();
+    @BeforeAll
+    static void beforeAll() {
+        WebDriverManager.chromedriver().setup();
+    }
+
+    @BeforeEach
+    void beforeEach(){
+        chromeOptions = new ChromeOptions();
         chromeOptions.addArguments("--disable-notifications");
         chromeOptions.addArguments("--start-maximized");
-
-        WebDriverManager.chromedriver().setup();
-
-        WebDriver webDriver = new ChromeDriver(chromeOptions);
-        WebDriverWait webDriverWait = new WebDriverWait(webDriver, Duration.ofSeconds(10));
-
+        webDriver = new ChromeDriver(chromeOptions);
+        webDriverWait = new WebDriverWait(webDriver, Duration.ofSeconds(10));
         webDriver.get("https://www.eldorado.ru/");
+    }
+
+    @Test
+    void eldoradoDeleteItem() {
+
+        //не понимаю, работает через раз, за все попытки, хотя бы раз,
+        // да вылетит ошибка в рандомном шаге, это у меня такой плохой код получился или сайт такой?
 
         webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//form[@role='search']")));
         webDriver.findElement(By.xpath("//form[@role='search']")).click();
@@ -46,9 +58,14 @@ public class EldoradoAutotestDeleteItem {
         webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[contains(@class,'icons')]//span[@onclick]")));
         webDriver.findElement(By.xpath("//div[contains(@class,'icons')]//span[@onclick]")).click();
 
-
-        Thread.sleep(5000);
-        webDriver.quit();
+        Assertions.assertTrue(webDriver.findElement(By.xpath("//span[@id='total_price_id'][text()='0 ']")).isDisplayed());
 
     }
+
+
+    @AfterEach
+    void tearDown() {
+        webDriver.quit();
+    }
+
 }
