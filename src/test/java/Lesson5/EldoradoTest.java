@@ -1,5 +1,6 @@
 package Lesson5;
 
+
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
@@ -8,6 +9,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.Duration;
 
@@ -17,13 +20,16 @@ public class EldoradoTest {
     ChromeOptions chromeOptions;
     WebDriverWait webDriverWait;
 
+    private static Logger logger = LoggerFactory.getLogger(EldoradoTest.class);
+
+
     @BeforeAll
     static void beforeAll() {
         WebDriverManager.chromedriver().setup();
     }
 
     @BeforeEach
-    void beforeEach(){
+    void beforeEach() {
         chromeOptions = new ChromeOptions();
         chromeOptions.addArguments("--disable-notifications");
         chromeOptions.addArguments("--start-maximized");
@@ -59,7 +65,7 @@ public class EldoradoTest {
         webDriver.findElement(By.xpath("//div[contains(@class,'icons')]//span[@onclick]")).click();
 
         Assertions.assertTrue(webDriver.findElement(By.xpath("//span[@id='total_price_id'][text()='0 ']")).isDisplayed());
-
+        logger.info("eldoradoDeleteItem - тест успешен");
     }
 
 
