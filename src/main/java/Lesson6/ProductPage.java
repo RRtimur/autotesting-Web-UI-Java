@@ -1,5 +1,6 @@
 package Lesson6;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -14,10 +15,12 @@ public class ProductPage extends BaseView {
     @FindBy(xpath = "//a[@class='basket active']")
     private WebElement goToCartButton;
 
+    @Step("Нажать на кнопку 'Добавить товар в корзину' ")
     public ProductPopup addProductToCart(){
         addToCartButton.click();
         return new ProductPopup(driver);
     }
+    @Step("Нажать на кнопку 'Перейти в корзину'")
     public CartPage goToCart(){
         webDriverWait.until(ExpectedConditions.visibilityOf(goToCartButton));
         goToCartButton.click();

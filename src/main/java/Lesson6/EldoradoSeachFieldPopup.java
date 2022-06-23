@@ -1,5 +1,6 @@
 package Lesson6;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -13,13 +14,13 @@ public class EldoradoSeachFieldPopup extends BaseView{
     @FindBy(xpath = "//input[@aria-label='Поиск товаров']")
     private WebElement popupSearchField;
 
-    @FindBy(xpath = "//img//ancestor::a[@href='/cat/detail/smartfon-xiaomi-redmi-10-4-64gb-pebble-white/']")
+    @FindBy(xpath = "//img//ancestor::a[@href='/cat/detail/smartfon-redmi-9a-32gb-granite-gray/']")
     private WebElement productXpath;
 
 
-
+    @Step("Перейти на страницу выбранного товара")
     public ProductPage goToProduct(){
-        popupSearchField.sendKeys("Смартфон Xiaomi Redmi 10 4 64GB Pebble White");
+        popupSearchField.sendKeys("Смартфон Xiaomi Redmi");
         webDriverWait.until(ExpectedConditions.visibilityOf(productXpath));
         productXpath.click();
         return new ProductPage(driver);
